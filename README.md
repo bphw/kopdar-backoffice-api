@@ -1,6 +1,6 @@
 # http-swagger for Kopdar Backoffice
 
-![Kopdar Swagger API list!](swagger.png at 06.15.34.png "API list")
+![Kopdar Swagger](swagger.png "API list")
 
 This apps only contain of API with data source taken from `skalakid_skw` database which store on this address:
 
