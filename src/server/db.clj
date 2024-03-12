@@ -8,14 +8,9 @@
 
 (def mysql
   ;; remove host when loaded to VPS
-  ;; :host "192.3.228.147"
-  ;; {:dbtype "mysql" :dbname "skalakid_skw" :user "bambang" :password "Matengkon1!"}
   (connection/->pool com.mchange.v2.c3p0.ComboPooledDataSource
                      {:dbtype "mysql" :dbname "skalakid_skw" :host "192.3.228.147" :user "bambang" :password "Matengkon1!" :dataSourceProperties {:socketTimeout 30}
                       :maxPoolSize 30})
-  ;; {:jdbcUrl "jdbc:mysql://192.3.228.147:3306/skalakid_skw;user=bambang;password=Matengkon1!"}
-  ;; :jdbcUrl "jdbc:mysql://192.3.228.147:3306/skalakid_skw;user=root;password=Semogab3rkah!"
-  ;; :dbname "/Users/bambangpujiharyowicaksono/Downloads/clojure/clojure-inertia-kopdar-backoffice/resources/database/backoffice.sqlite"
   )
 
 (def ds

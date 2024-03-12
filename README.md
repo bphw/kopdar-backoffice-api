@@ -1,11 +1,13 @@
 # http-swagger for Kopdar Backoffice
 
+![Kopdar Swagger API list!](Screen Shot 2024-03-13 at 06.15.34.png "API list")
+
 This apps only contain of API with data source taken from `skalakid_skw` database which store on this address:
 
 - localhost
-- <other ip address>
+- 192.3.228.147
 
-Table covered so far:
+Table covered so far (another upcoming tables might comes):
 
 - kdstblalmtuser
 - kdstblmastetls
@@ -19,9 +21,6 @@ Table covered so far:
 - kdstblmasttranstat
 - kdstblmastugrp
 - kdstblmastuser
-
-While **uncovered** ones are:
-
 - kdstblrprdkdeta
 - kdstblrtokhead
 - kdstbltchathead
@@ -30,14 +29,14 @@ While **uncovered** ones are:
 
 ## Installation
 
-- cd ~/Downloads
-- git clone <git-url>
+- cd ~/Downloads or ===your–preferred–local-directory===
+- git clone `https://github.com/bphw/kopdar-backoffice-api`
 - cd clojure-http-swagger-kopdar
 - $ lein repl
 
 ## Usage
 
-To run on single .jar file, do `lein install` (later)
+To run on single .jar file, do `lein install` (later as this not implemented yet)
 
     $ java -jar http-swagger-0.1.0-standalone.jar [args]
 
@@ -61,8 +60,6 @@ FIXME: listing of options this app accepts.
 
 ### Bugs
 
-...
-
 ### Any Other Sections
 
 ### That You Think
@@ -71,7 +68,7 @@ FIXME: listing of options this app accepts.
 
 ## License
 
-Copyright © 2024 Bambang
+Copyright © 2024 Bambang Puji Haryo
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
