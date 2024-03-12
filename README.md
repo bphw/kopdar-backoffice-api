@@ -7,7 +7,7 @@ This apps only contain of API with data source taken from `skalakid_skw` databas
 - localhost
 - 192.3.228.147
 
-Table covered so far (another upcoming tables might comes):
+Table covered so far (another upcoming tables might comes)🚗:
 
 - kdstblalmtuser
 - kdstblmastetls
@@ -29,7 +29,7 @@ Table covered so far (another upcoming tables might comes):
 
 ## Installation
 
-- cd ~/Downloads or ===your–preferred–local-directory===
+- cd ~/Downloads or ==your–preferred–local-directory==
 - git clone `https://github.com/bphw/kopdar-backoffice-api`
 - cd clojure-http-swagger-kopdar
 - $ lein repl
@@ -68,7 +68,7 @@ FIXME: listing of options this app accepts.
 
 ## License
 
-Copyright © 2024 Bambang Puji Haryo
+Copyright © 2024 Bambang Wicaksono
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
