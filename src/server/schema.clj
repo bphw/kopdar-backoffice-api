@@ -322,7 +322,7 @@
 (s/def :master/product-images-rating
   (s/keys
    :req-un [:foreign/tokotbid]
-   :opt-un [:generic/images
+   :opt-un [:product/images
             :product-detail/favorite
             :product-detail/popular
             :generic/ratg]))
