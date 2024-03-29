@@ -58,9 +58,10 @@
 (s/def :delivery/hjrk (s/nilable double?))
 (s/def :delivery/hkir (s/nilable double?))
 ;; product schema
-(s/def :product/hbli (s/nilable int?))
-(s/def :product/hjua (s/nilable int?))
-(s/def :product/qstk (s/nilable int?))
+(s/def :product/hbli (s/nilable double?))
+(s/def :product/hjua (s/nilable double?))
+(s/def :product/qstk (s/nilable double?))
+(s/def :product/imag string?)
 ;; product-detail schema
 (s/def :product-detail/prdkkode (s/nilable string?))
 (s/def :product-detail/prdknama (s/nilable string?))
@@ -83,6 +84,9 @@
 (s/def :trx-header/gamttota (s/nilable double?))
 (s/def :trx-header/namttota (s/nilable double?))
 (s/def :trx-header/hkir (s/nilable double?))
+;; product-rating schema
+(s/def :product-detail/favorite (s/nilable boolean?))
+(s/def :product-detail/popular (s/nilable boolean?))
 
 ;; kdstblmastetls schema
 (s/def :master/etalase
@@ -311,3 +315,14 @@
             :generic/chby :generic/chdt :generic/chtm]))
 (s/def :master/products
   (s/coll-of :master/product))
+
+;; product detail contains images, favorite, popular and rating
+(s/def :product/images
+  (s/coll-of :product/imag :into []))
+(s/def :master/product-images-rating
+  (s/keys
+   :req-un [:foreign/tokotbid]
+   :opt-un [:generic/images
+            :product-detail/favorite
+            :product-detail/popular
+            :generic/ratg]))

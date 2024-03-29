@@ -1,4 +1,5 @@
 (ns server.core
+  (:gen-class)
   (:require [reitit.ring :as ring]
             ;; [reitit.http :as http]
             [reitit.coercion.spec]
@@ -44,9 +45,10 @@
                               :description "Kopdar Backoffice build using swagger-docs. TODO:
                               ~~- complete 5 remain tables: `kdstblrprdkdeta`, `kdstblrtokhead`, `kdstbltchathead`, `kdstbltjuadeta`, `kdstbltjuahead`.~~&#x2705;
                               ~~- connection [pooling](https://github.com/bostonaholic/clojure.jdbc-c3p0)~~&#x2705;
+                              ~~- apply [redis](https://github.com/taoensso/carmine)~~&#x2705;
                               - apply [auth](https://github.com/metosin/reitit/tree/master/examples/buddy-auth) header
                               - apply dynamic env database switching [environment](https://github.com/weavejester/environ)"
-                              :version "0.0.1"}
+                              :version "0.0.2"}
                        ;; used in /secure APIs below
                        :securityDefinitions {"auth" {:type :apiKey
                                                      :in :header
@@ -56,7 +58,7 @@
       {:get {:no-doc true
              :openapi {:info {:title "Kopdar Backoffice API"
                               :description "Kopdar Backoffice build using openapi3-docs"
-                              :version "0.0.1"}
+                              :version "0.0.2"}
                        ;; used in /secure APIs below
                        :components {:securitySchemes {"auth" {:type :apiKey
                                                               :in :header
@@ -781,7 +783,7 @@
                          {:status 200
                           :body (db/get-trx-header id)})}}]]
 
-;;;;;;;;;;;;;
+     ;;;;;;;;;;;;;
      ;; product
      ;;;;;;;;;;;;
      ["/product"
@@ -824,15 +826,18 @@
               :responses {200 {:body :master/product}}
               :handler (fn [{{{:keys [id]} :path} :parameters}]
                          {:status 200
-                          :body (db/get-product id)})}}]]
-
-;; yg sukses, semua value harus diisi
-     ;; :body (->Orang "bambang" "bam@mail.com" "0215386944")
-     ;; :body (s/conform :unq/person {:nama "Bambang" :emai "email" :telp "0215386944"})
-     ;; :body (createperson "Bambang" "email" "0215386944")
-     ;; :body tanpa qualified name di saat define createperson
-     ;; contoh collection
-     ;; :body (s/conform :unq/persons [(->Orang "bambang" nil nil) (->Orang "puji" "email" "telp")])})}}];toko/get-all-stores
+                          :body (db/get-product id)})}}]
+      ["/images/:id"
+       {:get {:summary "Retrieve 1 produk image, rating, flag favorite atau populer berdasarkan `tbid`"
+              :description "Array images, rating dan populer dari table `kdstblmastprdkdeta_` dan `kdstblmastprdkimag_`"
+              :parameters {:path {:id int?}}
+              :responses {200 {:body :master/product-images-rating}}
+              :handler (fn [{{{:keys [id]} :path} :parameters}]
+                         {:status 200
+                          :body (let [prating (db/get-product-rating id)
+                                      pimages (db/get-product-images-arr id)] ;; image in array format
+                                  {:tokotbid id :images pimages :rating prating})})}}]
+      ]
 
      ["/secure"
       {:tags #{"secure"}
@@ -901,4 +906,8 @@
     (reset! server nil)))
 
 (comment
+  (start))
+
+(defn -main [& args]
+  (println "Kopdar server now running..")
   (start))

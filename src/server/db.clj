@@ -2,9 +2,11 @@
   (:require [next.jdbc :as jdbc]
             [next.jdbc.connection :as connection]
             [next.jdbc.result-set :as rs]
-            [next.jdbc.sql :as sql])
-  ;; (:import (com.mchange.v2.c3p0 ComboPooledDataSource PooledDataSource))
-  )
+            [next.jdbc.sql :as sql]
+            [server.cache :as c]
+            [clojure.spec.alpha :as s]
+            [expound.alpha :as expound]
+            [clojure.data.json :as json]))
 
 (def mysql
   ;; remove host when loaded to VPS
@@ -154,6 +156,10 @@
 ;; stores/kdstblmastprdk
 (defn get-all-products []
   (jdbc/execute! db ["SELECT * FROM kdstblmastprdk"]))
+(defn get-all-products-redis []
+  (when (nil? (c/getter "products"))
+    (c/setter-with-exp "products" (json/write-str (jdbc/execute! db ["SELECT * FROM kdstblmastprdk"])) 100))
+  (s/conform :master/products (json/read-str (c/getter "products"))))
 (defn get-product [id]
   (sql/get-by-id db :kdstblmastprdk id :tbid {}))
 (defn create-product [product]
@@ -162,6 +168,13 @@
   (sql/update! db :kdstblmastprdk body {:tbid id}))
 (defn delete-product [id]
   (sql/delete! db :kdstblmastprdk {:tbid id}))
+(defn get-product-images [id]
+  (sql/find-by-keys db :kdstblmastprdkimag_ {:prdktbid id} {:columns [:imag]}))
+(defn get-product-images-arr [id]
+  ;; get second var from first object returned
+  (map #(second (first %)) (get-product-images id)))
+(defn get-product-rating [id]
+  (sql/get-by-id db :kdstblmastprdkdeta_ id :prdktbid {}))
 
 ;; stores/kdstblrprdkdeta
 (defn get-all-product-details []
