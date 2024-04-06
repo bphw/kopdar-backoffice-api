@@ -62,6 +62,7 @@
 (s/def :product/hjua (s/nilable double?))
 (s/def :product/qstk (s/nilable double?))
 (s/def :product/imag string?)
+(s/def :product/warna string?)
 ;; product-detail schema
 (s/def :product-detail/prdkkode (s/nilable string?))
 (s/def :product-detail/prdknama (s/nilable string?))
@@ -319,10 +320,13 @@
 ;; product detail contains images, favorite, popular and rating
 (s/def :product/images
   (s/coll-of :product/imag :into []))
+(s/def :product/colors
+  (s/coll-of :product/warna :into []))
 (s/def :master/product-images-rating
   (s/keys
    :req-un [:foreign/tokotbid]
    :opt-un [:product/images
+            :product/colors
             :product-detail/favorite
             :product-detail/popular
             :generic/ratg]))

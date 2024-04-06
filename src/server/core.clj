@@ -827,16 +827,17 @@
               :handler (fn [{{{:keys [id]} :path} :parameters}]
                          {:status 200
                           :body (db/get-product id)})}}]
-      ["/images/:id"
-       {:get {:summary "Retrieve 1 produk image, rating, flag favorite atau populer berdasarkan `tbid`"
-              :description "Array images, rating dan populer dari table `kdstblmastprdkdeta_` dan `kdstblmastprdkimag_`"
+      ["/images-colors-rating/:id"
+       {:get {:summary "Retrieve 1 product image, color, rating, flag favorite atau populer berdasarkan `tbid`"
+              :description "Array images, rating dan populer dari table `kdstblmastprdkdeta_`, `kdstblmastprdkimag_`, `kdstblmastprdkwarna_`"
               :parameters {:path {:id int?}}
               :responses {200 {:body :master/product-images-rating}}
               :handler (fn [{{{:keys [id]} :path} :parameters}]
                          {:status 200
                           :body (let [prating (db/get-product-rating id)
+                                      pcolors (db/get-product-colors-arr id)
                                       pimages (db/get-product-images-arr id)] ;; image in array format
-                                  {:tokotbid id :images pimages :rating prating})})}}]
+                                  {:tokotbid id :colors pcolors :images pimages :rating prating})})}}]
       ]
 
      ["/secure"

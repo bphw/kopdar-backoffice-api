@@ -168,8 +168,12 @@
   (sql/update! db :kdstblmastprdk body {:tbid id}))
 (defn delete-product [id]
   (sql/delete! db :kdstblmastprdk {:tbid id}))
+(defn get-product-colors [id]
+  (sql/find-by-keys db :kdstblmastprdkwarna_ {:prdktbid id} {:columns [:warna]}))
 (defn get-product-images [id]
   (sql/find-by-keys db :kdstblmastprdkimag_ {:prdktbid id} {:columns [:imag]}))
+(defn get-product-colors-arr [id]
+  (map #(second (first %)) (get-product-colors id)))
 (defn get-product-images-arr [id]
   ;; get second var from first object returned
   (map #(second (first %)) (get-product-images id)))
